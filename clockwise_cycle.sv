@@ -26,19 +26,23 @@ module clockwise_cycle(
     input logic en,
     input logic sel,
     
-    output logic [7:0] sseg0,
-    output logic [7:0] sseg1,
-    output logic [7:0] sseg2,
-    output logic [7:0] sseg3
+    output logic [7:0] an,
+    output logic [7:0] sseg
     );
     
     parameter top  = 8'b10011100;
     parameter bot  = 8'b10100011;
     parameter none = 8'b11111111;
     
-    logic [2:0]state;
+    parameter anOff= 8'b11111111;
+    parameter an0  = 8'b11111110;
+    parameter an1  = 8'b11111101;
+    parameter an2  = 8'b11111011;
+    parameter an3  = 8'b11110111;
     
-    count_n#(.N(20), .M(3)) counter(
+    logic [2:0] state;
+    
+    count_n#(.N(28), .M(3)) counter(
         .clk(clk),
         .rst(rst),
         .en(en),
@@ -48,57 +52,45 @@ module clockwise_cycle(
     );
     
     always_comb
+    
     if(en)
         case(state)
             0:begin
-                sseg0 = top;
-                sseg1 = none;
-                sseg2 = none;
-                sseg3 = none;
+                sseg = top;
+                an   = an0;
              end
              1:begin
-                sseg0 = none;
-                sseg1 = top;
-                sseg2 = none;
-                sseg3 = none;
+                sseg = top;
+                an   = an1;
              end
              2:begin
-                sseg0 = none;
-                sseg1 = none;
-                sseg2 = top;
-                sseg3 = none;
+                sseg = top;
+                an   = an2;
              end
              3:begin
-                sseg0 = none;
-                sseg1 = none;
-                sseg2 = none;
-                sseg3 = top;
+                sseg = top;
+                an   = an3;
              end
              4:begin
-                sseg0 = none;
-                sseg1 = none;
-                sseg2 = none;
-                sseg3 = bot;
+                sseg = bot;
+                an   = an3;
              end
              5:begin
-                sseg0 = none;
-                sseg1 = none;
-                sseg2 = bot;
-                sseg3 = none;
+                sseg = bot;
+                an   = an2;
              end
              6:begin
-                sseg0 = none;
-                sseg1 = bot;
-                sseg2 = none;
-                sseg3 = none;
+                sseg = bot;
+                an   = an1;
              end
              7:begin
-                sseg0 = bot;
-                sseg1 = none;
-                sseg2 = none;
-                sseg3 = none;
+                sseg = bot;
+                an   = an0;
              end
         endcase
-    
-    
+    else begin
+        sseg = none;
+        an   = anOff;
+    end
+ 
 endmodule

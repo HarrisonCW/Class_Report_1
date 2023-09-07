@@ -26,10 +26,6 @@ module top_module(
     output logic [7:0]an
     );
     
-    logic [7:0]sseg0;
-    logic [7:0]sseg1;
-    logic [7:0]sseg2;
-    logic [7:0]sseg3;
    
     clockwise_cycle cycle(
         .clk(clk),
@@ -37,25 +33,11 @@ module top_module(
         .en(en),
         .sel(sel),
         
-        .sseg0(sseg0),
-        .sseg1(sseg1),
-        .sseg2(sseg2),
-        .sseg3(sseg3)
+        .sseg(sseg),
+        .an(an)
     );
     
-    sseg_handler sseg_handler(
-        .en(1'b1),
-        .rst(rst),
-        .clk(clk),
-        .sel(sel),
-        .sseg0(sseg0),
-        .sseg1(sseg1),
-        .sseg2(sseg2),
-        .sseg3(sseg3),
-        
-        .an(an),
-        .sseg(sseg)
-    );
+    
     
     
     
