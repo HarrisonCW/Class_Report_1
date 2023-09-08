@@ -42,7 +42,7 @@ module clockwise_cycle(
     
     logic [2:0] state;
     
-    count_n#(.N(28), .M(3)) counter(
+    count_n#(.N(5), .M(3)) counter(
         .clk(clk),
         .rst(rst),
         .en(en),
